@@ -1,3 +1,5 @@
+# Calculates and returns the longest palindromic subsequence in s (defined below)
+
 def getValue(row, col):
     return matrix[row][col]
 
@@ -32,12 +34,6 @@ def palindrome_length(s, l, r):
             return setValue(l, r, max(left_value, right_value))
         
         return setValue(l, r, max(palindrome_length(s, l + 1, r), palindrome_length(s, l, r - 1)))
-
-
-
-
-
-
 
 
 s = "baxnana"  # Max Length: 5

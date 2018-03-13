@@ -41,9 +41,7 @@ class Container {
   }
 }
 
-let gcd = function(a, b) {
-  return b ? gcd(b, a % b) : a;
-};
+let gcd = (a,b) => b ? gcd(b, a % b) : a;
 
 
 // Solve a water puzzle given sizes (in Liters)

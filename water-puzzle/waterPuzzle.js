@@ -32,9 +32,7 @@ var Container = (function () {
     };
     return Container;
 }());
-var gcd = function (a, b) {
-    return b ? gcd(b, a % b) : a;
-};
+var gcd = function (a, b) { return b ? gcd(b, a % b) : a; };
 // Solve a water puzzle given sizes (in Liters)
 var containers = [3, 4];
 var goal = 2;
