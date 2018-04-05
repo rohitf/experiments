@@ -1,2 +1,3 @@
 # experiments
-Code snippets in JS and Python that model various programming styles, implement interesting algorithms, or solve a fun puzzle
+
+Code snippets in TS, JS and Python that show off language quirks, utilize different prog. paradigms, or implement interesting algorithms
