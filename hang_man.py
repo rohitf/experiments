@@ -1,4 +1,5 @@
-import requests, random
+import requests, random, string
+from enum import Enum
 
 HANGMAN_ART = [
     """
@@ -92,11 +93,19 @@ HANGMAN_ART = [
 """
 ]
 
+# Constant
+EMPTY = '_'
 
-# Helper function
+class Letter(Enum):
+    GUESS = 1
+    CORRECT = 2
+    DEFAULT = 3
+
+# Helper functions
 def print_state():
-    print("\n", HANGMAN_ART[0])
+    guesses = [letter.upper() for letter in [*char_table] if char_table[letter] != Letter.DEFAULT]
 
+    print("\n", HANGMAN_ART[0])
     print("Current state: ", ' '.join(current))
     print("Letters tried so far: ", ' '.join(guesses))
     print("Wrong attempts remaining: ", len(HANGMAN_ART))
@@ -110,10 +119,8 @@ def generate_word(length):
 # Initialize vars
 word_len = random.randint(3, 10)
 word = generate_word(word_len)
-char_table = {char: False for char in word}
+char_table = {char: Letter.DEFAULT for char in string.ascii_lowercase}
 
-guesses = []
-EMPTY = '_'
 current = [EMPTY] * len(word)
 
 print("\tWelcome to Hangman!")
@@ -123,22 +130,22 @@ while current != word and HANGMAN_ART:
     print_state()
 
     # Duplicate guess checking
-    guess = input("Guess a letter: ")
-    while guess in guesses:
+    guess = input("Guess a letter: ").lower()
+    while char_table[guess] != Letter.DEFAULT:
         print("Please try again. This letter has already been tried.")
         guess = input("\nGuess a letter: ")
-    guesses.append(guess)
+    char_table[guess] = Letter.GUESS
 
     # Verify guess
-    if guess.lower() in word:
+    if guess in word:
         print("\nCorrect! Keep on going! ")
-        char_table[guess] = True
+        char_table[guess] = Letter.CORRECT
     else:
         print("\nWrong! Please try again! ")
         del HANGMAN_ART[0]
 
     # Set current state
-    current = [(letter if char_table[letter] else EMPTY) for letter in word]
+    current = [(letter if char_table[letter] == Letter.CORRECT else EMPTY) for letter in word]
 
 if not HANGMAN_ART:
     print("\nYou have been hung for your bad guesses :(")
